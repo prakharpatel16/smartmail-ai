@@ -1,10 +1,7 @@
 import { Email, UserPreference } from '../../models/index.js';
 import { enqueueNotification } from '../../queues/index.js';
 import { emitToUser } from '../socketEvents.service.js';
-import { summarizeEmail } from './summary.service.js';
-import { classifyPriority } from './priority.service.js';
-import { detectMeeting } from './meeting.service.js';
-import { analyzePhishing } from './phishing.service.js';
+import { analyzeEmail } from './emailAnalysis.service.js';
 import { embedEmail } from './embedding.service.js';
 
 export async function processEmailAi({ userId, emailId }) {
@@ -15,29 +12,48 @@ export async function processEmailAi({ userId, emailId }) {
   await Email.updateOne({ _id: email._id, userId }, { $set: { 'aiProcessing.status': 'PROCESSING', 'aiProcessing.startedAt': new Date() }, $inc: { 'aiProcessing.attempts': 1 } });
   emitToUser(userId, 'ai:processing', { emailId: String(email._id), operation: 'analysis' });
 
-  const tasks = [
-    ['summary', () => summarizeEmail(email)],
-    ...(features.priorityDetection === false ? [] : [['priority', () => classifyPriority(email)]]),
-    ...(features.meetingDetection === false ? [] : [['meeting', () => detectMeeting(email)]]),
-    ...(features.phishingDetection === false ? [] : [['phishing', () => analyzePhishing(email)]]),
-    ['embedding', () => embedEmail(email)]
-  ];
   const completedTasks = new Set(email.aiProcessing?.completedTasks || []);
-  const pendingTasks = tasks.filter(([key]) => !completedTasks.has(key));
   const results = [];
   let failureCode = '';
-  for (const [key, task] of pendingTasks) {
-    try {
-      results.push({ key, status: 'fulfilled', value: await task() });
-      completedTasks.add(key);
-    } catch (reason) {
-      results.push({ key, status: 'rejected', reason });
-      // Embeddings are optional; text-based inbox search still works without them.
-      if (key !== 'embedding') {
-        failureCode ||= reason?.code || 'AI_PROCESSING_FAILED';
-        break;
+  const textTasks = [
+    'summary',
+    ...(features.priorityDetection === false ? [] : ['priority']),
+    ...(features.meetingDetection === false ? [] : ['meeting']),
+    ...(features.phishingDetection === false ? [] : ['phishing'])
+  ].filter((key) => !completedTasks.has(key));
+
+  const analysisPromise = textTasks.length
+    ? analyzeEmail(email, {
+        priority: features.priorityDetection !== false,
+        meeting: features.meetingDetection !== false,
+        phishing: features.phishingDetection !== false
+      })
+    : Promise.resolve(null);
+  const embeddingPending = !completedTasks.has('embedding');
+  const embeddingPromise = embeddingPending ? embedEmail(email) : Promise.resolve(null);
+  const [analysisResult, embeddingResult] = await Promise.allSettled([analysisPromise, embeddingPromise]);
+
+  if (textTasks.length) {
+    if (analysisResult.status === 'fulfilled') {
+      const value = analysisResult.value;
+      const valueByTask = {
+        summary: { summary: value.summary, keyPoints: value.keyPoints, actionItems: value.actionItems, deadlines: value.deadlines },
+        priority: value.priority,
+        meeting: value.meetingDetected ? { meetingDetected: true, meeting: value.meeting } : { meetingDetected: false, meeting: null },
+        phishing: value.phishing
+      };
+      for (const key of textTasks) {
+        results.push({ key, status: 'fulfilled', value: valueByTask[key] });
+        completedTasks.add(key);
       }
-    }
+    } else failureCode = analysisResult.reason?.code || 'AI_PROCESSING_FAILED';
+  }
+
+  if (embeddingPending && embeddingResult.status === 'fulfilled') {
+    completedTasks.add('embedding');
+  } else if (embeddingPending && embeddingResult.status === 'rejected') {
+    // Embeddings are optional; text-based inbox search still works without them.
+    console.warn(JSON.stringify({ level: 'warn', code: 'EMAIL_EMBEDDING_FAILED', emailId: String(email._id), reason: embeddingResult.reason?.code || 'EMBEDDING_FAILED' }));
   }
   const updates = {};
   const notifications = [];
