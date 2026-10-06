@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"on-secondary-fixed":"#000767","error-container":"#ffdad6","primary-fixed-dim":"#c3c0ff","tertiary":"#434853","on-tertiary":"#ffffff","on-tertiary-fixed-variant":"#424751","on-secondary-container":"#17228f","secondary-fixed-dim":"#bdc2ff","surface":"#faf8ff","on-tertiary-fixed":"#171c25","tertiary-fixed":"#dee2ef","on-primary-fixed":"#0f0069","on-tertiary-container":"#d7dbe8","on-error-container":"#93000a","outline-variant":"#c7c4d8","on-error":"#ffffff","inverse-primary":"#c3c0ff","tertiary-container":"#5b606b","secondary":"#4953bc","on-primary-fixed-variant":"#3323cc","on-background":"#131b2e","on-primary":"#ffffff","surface-tint":"#4d44e3","on-secondary":"#ffffff","primary-fixed":"#e2dfff","primary-container":"#4f46e5","on-secondary-fixed-variant":"#2f3aa3","background":"#faf8ff","secondary-container":"#8792fe","inverse-surface":"#283044","outline":"#777587","surface-dim":"#d2d9f4","surface-container":"#eaedff","on-surface":"#131b2e","surface-container-lowest":"#ffffff","tertiary-fixed-dim":"#c2c6d3","primary":"#3525cd","surface-bright":"#faf8ff","surface-container-highest":"#dae2fd","on-primary-container":"#dad7ff","error":"#ba1a1a","surface-container-low":"#f2f3ff","secondary-fixed":"#e0e0ff","on-surface-variant":"#464555","inverse-on-surface":"#eef0ff","surface-container-high":"#e2e7ff","surface-variant":"#dae2fd"},borderRadius:{"DEFAULT":"0.125rem","lg":"0.25rem","xl":"0.5rem","full":"0.75rem"},spacing:{"space-xl":"2rem","space-md":"0.75rem","space-sm":"0.5rem","margin":"1rem","gutter":"0.75rem","space-lg":"1.25rem","space-xs":"0.25rem"},fontFamily:{"label-sm":["Inter"],"body-lg":["Inter"],"code-sm":["JetBrains Mono"],"label-md":["Inter"],"headline-md":["Inter"],"body-md":["Inter"],"headline-xl":["Inter"],"body-sm":["Inter"],"headline-lg":["Inter"]},fontSize:{"label-sm":["11px",{"lineHeight":"14px","letterSpacing":"0.02em","fontWeight":"600"}],"body-lg":["15px",{"lineHeight":"24px","letterSpacing":"-0.005em","fontWeight":"400"}],"code-sm":["11px",{"lineHeight":"16px","fontWeight":"500"}],"label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.01em","fontWeight":"500"}],"headline-md":["16px",{"lineHeight":"24px","letterSpacing":"-0.01em","fontWeight":"600"}],"body-md":["13px",{"lineHeight":"20px","fontWeight":"400"}],"headline-xl":["28px",{"lineHeight":"36px","letterSpacing":"-0.02em","fontWeight":"600"}],"body-sm":["12px",{"lineHeight":"18px","fontWeight":"400"}],"headline-lg":["20px",{"lineHeight":"28px","letterSpacing":"-0.015em","fontWeight":"600"}]}}}}</script></head><body class="bg-surface font-body-md text-on-surface min-h-screen"><aside class="fixed left-0 top-0 h-full w-64 bg-surface-container-lowest shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-50 flex flex-col justify-between select-none"><div class="flex flex-col"><div class="h-14 px-space-md flex items-center justify-between"><div class="flex items-center gap-space-sm"><img alt="Brand logo. - Primary color: #4f46e5
+- Font: inter
+- Mode: light
+- Roundness: rounded-sm
+" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1XE7BtOnj-i2rlo_fLlfdk1zQ4IkTe980s4MfWi8OYC2YniBdaLECkNCYADwbaIxdAb1GSwO5H5lUV_tTCUlVEW8MJPCifp6hzgIwPSCwikRXLPzXk2C_rvJJ5Y8KOtamUz9Z34hMI3athP30YdkTiCs2f9NCVKkTdgIdR7CPw2uZXUW17fmpl5_CnqPmH4pEs2xBWQAxC3WNNhZQt2e8x-yrT2HAQDzNdDTtj8W6lE-OpcTg3BiR8nbPuT"/><span class="font-headline-md text-headline-md text-on-surface tracking-tight font-semibold">SmartMail AI</span></div><span class="font-label-sm text-label-sm px-space-xs py-0.5 rounded-full bg-surface-container text-primary font-semibold">Pro</span></div><div class="px-space-md pt-space-xs pb-space-md"><button class="w-full h-9 px-space-md rounded-lg bg-primary-container text-on-primary hover:bg-primary transition-all flex items-center justify-between font-label-md text-label-md shadow-sm" type="button"><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-[18px]">edit_square</span><span>New Message</span></div><kbd class="font-code-sm text-code-sm bg-on-primary/20 px-1.5 py-0.5 rounded text-on-primary">C</kbd></button></div><div class="px-space-md space-y-space-md overflow-y-auto max-h-[calc(100vh-220px)]"><div class="space-y-0.5"><div class="px-space-xs py-1 font-label-sm text-label-sm text-outline uppercase tracking-wider">Mail</div><nav class="space-y-0.5" data-active-classes="bg-surface-container text-primary font-semibold rounded-lg"><a aria-current="page" class="flex items-center justify-between px-space-sm py-1.5 transition-all bg-surface-container text-primary font-semibold rounded-lg" data-path="inbox" href="#"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[18px]">inbox</span><span>Inbox</span></div><span class="font-label-sm text-label-sm px-1.5 py-0.2 rounded-full bg-primary-container text-on-primary">14</span></a><a class="flex items-center justify-between px-space-sm py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all font-body-md text-body-md" data-path="starred" href="#"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[18px]">star</span><span>Starred</span></div></a><a class="flex items-center justify-between px-space-sm py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all font-body-md text-body-md" data-path="sent" href="#"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[18px]">send</span><span>Sent</span></div></a><a class="flex items-center justify-between px-space-sm py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all font-body-md text-body-md" data-path="drafts" href="#"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[18px]">drafts</span><span>Drafts</span></div><span class="font-label-sm text-label-sm text-outline">2</span></a></nav></div><div class="space-y-0.5"><div class="px-space-xs py-1 font-label-sm text-label-sm text-outline uppercase tracking-wider">AI Workspace</div><nav class="space-y-0.5" data-active-classes="bg-surface-container text-primary font-semibold rounded-lg"><a class="flex items-center justify-between px-space-sm py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all font-body-md text-body-md" data-path="ask-my-inbox" href="#"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[18px] text-primary">auto_awesome</span><span>Ask My Inbox</span></div><span class="font-label-sm text-label-sm text-primary font-semibold">AI</span></a><a class="flex items-center justify-between px-space-sm py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all font-body-md text-body-md" data-path="ai-insights" href="#"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[18px]">insights</span><span>AI Insights</span></div></a></nav></div><div class="space-y-0.5"><div class="px-space-xs py-1 font-label-sm text-label-sm text-outline uppercase tracking-wider">Triage & Trust</div><nav class="space-y-0.5" data-active-classes="bg-surface-container text-primary font-semibold rounded-lg"><a class="flex items-center justify-between px-space-sm py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all font-body-md text-body-md" data-path="high-priority" href="#"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[18px] text-error">priority_high</span><span>High Priority</span></div><span class="font-label-sm text-label-sm px-1.5 py-0.2 rounded-full bg-error-container text-on-error-container">3</span></a><a class="flex items-center justify-between px-space-sm py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all font-body-md text-body-md" data-path="meetings" href="#"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[18px]">calendar_today</span><span>Meetings</span></div><span class="font-code-sm text-code-sm text-outline">Sync</span></a><a class="flex items-center justify-between px-space-sm py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all font-body-md text-body-md" data-path="security-center" href="#"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[18px]">verified_user</span><span>Security Center</span></div></a></nav></div></div></div><div class="px-space-md py-space-sm space-y-space-xs"><div class="pt-space-xs space-y-0.5"><nav class="space-y-0.5" data-active-classes="bg-surface-container text-primary font-semibold rounded-lg"><a class="flex items-center justify-between px-space-sm py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all font-body-md text-body-md" data-path="settings" href="#"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[18px]">settings</span><span>Settings</span></div></a><a class="flex items-center justify-between px-space-sm py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all font-body-md text-body-md" data-path="keyboard-shortcuts" href="#"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[18px]">keyboard</span><span>Shortcuts</span></div><kbd class="font-code-sm text-code-sm text-outline">?</kbd></a></nav></div><div class="pt-space-xs flex items-center justify-between p-space-xs rounded-lg hover:bg-surface-container transition-all cursor-pointer"><div class="flex items-center gap-space-sm overflow-hidden"><div class="relative"><img alt="Profile" class="w-8 h-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida/AEtjO1WOpSa39dZBd_4S_g_r6M3MtUF4iPY2g5VuSe44_zAWxaQMb8PKQeNtnUG3ifWkpt4c4dBx1DS9qj4cFS0XvEJWvdNLMedA2zSuO7xsW7LvYh06OjCkmVrJhTNuF9OoednXu5xZDwwDgsPLvi9WW0fK3E9Uh7KDDzlLUsuNhQ_JlgJfnvpG5qaBUvDb_htR2hiWDdX_Lz649Z36_R43IDIADdLEEWyqtXTm8Gr3KOKSx2sNDnRd-dCOVRh8"/><span class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-primary-container rounded-full ring-2 ring-surface-container-lowest"></span></div><div class="flex flex-col truncate"><span class="font-label-md text-label-md text-on-surface font-medium truncate">Prakhar</span><span class="font-body-sm text-body-sm text-on-surface-variant truncate">prakhar@company.com</span></div></div><span class="material-symbols-outlined text-[16px] text-outline">unfold_more</span></div></div></aside><div class="pl-64"><header class="fixed top-0 left-64 right-0 h-14 bg-surface-container-lowest/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-40 px-space-lg flex items-center justify-between gap-space-md"><div class="flex-1 max-w-xl"><div class="flex items-center w-full h-8 px-space-md rounded-lg bg-surface-container-low text-on-surface-variant focus-within:bg-surface-container-lowest focus-within:shadow-[0_0_0_1px_rgba(79,70,229,0.5)] transition-all"><span class="material-symbols-outlined text-[18px] text-outline mr-space-sm">search</span><input class="w-full bg-transparent font-body-md text-body-md text-on-surface placeholder:text-outline outline-none" placeholder="Search emails, threads, or ask AI..." type="text"/><kbd class="font-code-sm text-code-sm bg-surface-container px-1.5 py-0.5 rounded text-outline ml-space-xs">⌘K</kbd></div></div><div class="flex items-center gap-space-md"><div class="hidden lg:flex items-center gap-space-xs text-outline font-label-sm text-label-sm"><span class="material-symbols-outlined text-[14px] text-primary">sync</span><span>Synced 1m ago</span></div><div class="flex items-center gap-space-xs"><button class="h-8 px-space-sm rounded-lg hover:bg-surface-container text-on-surface-variant hover:text-on-surface transition-all flex items-center gap-1 font-label-md text-label-md" type="button"><span class="material-symbols-outlined text-[18px]">filter_list</span><span class="hidden sm:inline">Filter</span></button><button class="relative w-8 h-8 rounded-lg hover:bg-surface-container text-on-surface-variant hover:text-on-surface flex items-center justify-center transition-all" type="button"><span class="material-symbols-outlined text-[18px]">notifications</span><span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-primary"></span></button><div class="h-4 w-[1px] bg-surface-container-high mx-space-xs"></div><button class="h-8 px-space-sm rounded-lg hover:bg-surface-container text-on-surface-variant hover:text-on-surface transition-all flex items-center gap-space-xs" type="button"><img alt="Profile" class="w-6 h-6 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida/AEtjO1WOpSa39dZBd_4S_g_r6M3MtUF4iPY2g5VuSe44_zAWxaQMb8PKQeNtnUG3ifWkpt4c4dBx1DS9qj4cFS0XvEJWvdNLMedA2zSuO7xsW7LvYh06OjCkmVrJhTNuF9OoednXu5xZDwwDgsPLvi9WW0fK3E9Uh7KDDzlLUsuNhQ_JlgJfnvpG5qaBUvDb_htR2hiWDdX_Lz649Z36_R43IDIADdLEEWyqtXTm8Gr3KOKSx2sNDnRd-dCOVRh8"/><span class="material-symbols-outlined text-[16px] text-outline">expand_more</span></button></div></div></header><main class="relative pt-14 w-full bg-surface min-h-[calc(100vh-3.5rem)]"><div class="flex flex-col w-full">
+<div class="flex flex-col lg:flex-row w-full min-h-[calc(100vh-3.5rem)] bg-surface text-on-surface">
+<!-- LEFT & CENTER: Reading Pane & Rapid Action Center (w-full lg:w-8/12) -->
+<section class="flex flex-col flex-1 min-w-0 p-space-md lg:p-space-lg space-y-space-md">
+<!-- Top Action Toolbar & Keyboard Hints -->
+<div class="flex items-center justify-between bg-surface-container-lowest px-space-md py-space-sm rounded-xl shadow-sm">
+<div class="flex items-center gap-space-xs flex-wrap">
+<button aria-label="Back to Inbox" class="h-8 w-8 rounded-lg flex items-center justify-center text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" type="button">
+<span class="material-symbols-outlined text-[20px]">arrow_back</span>
+</button>
+<div class="h-4 w-px bg-surface-container-high mx-1"></div>
+<button class="h-8 px-space-sm rounded-lg flex items-center gap-1.5 text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-label-md text-label-md" type="button">
+<span class="material-symbols-outlined text-[18px]">archive</span>
+<span>Archive</span>
+<kbd class="font-code-sm text-code-sm bg-surface-container-low px-1 py-0.5 rounded text-outline">E</kbd>
+</button>
+<button class="h-8 px-space-sm rounded-lg flex items-center gap-1.5 text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-label-md text-label-md" type="button">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+<span>Trash</span>
+<kbd class="font-code-sm text-code-sm bg-surface-container-low px-1 py-0.5 rounded text-outline">#</kbd>
+</button>
+<button class="h-8 px-space-sm rounded-lg flex items-center gap-1.5 text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-label-md text-label-md" type="button">
+<span class="material-symbols-outlined text-[18px]">mark_email_unread</span>
+<span>Unread</span>
+<kbd class="font-code-sm text-code-sm bg-surface-container-low px-1 py-0.5 rounded text-outline">U</kbd>
+</button>
+<button class="h-8 px-space-sm rounded-lg flex items-center gap-1.5 text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-label-md text-label-md" type="button">
+<span class="material-symbols-outlined text-[18px]">schedule</span>
+<span>Snooze</span>
+<kbd class="font-code-sm text-code-sm bg-surface-container-low px-1 py-0.5 rounded text-outline">H</kbd>
+</button>
+<div class="h-4 w-px bg-surface-container-high mx-1"></div>
+<button class="h-8 px-space-sm rounded-lg flex items-center gap-1 text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-label-md text-label-md" type="button">
+<span class="material-symbols-outlined text-[18px]">label</span>
+<span>Label</span>
+</button>
+</div>
+<div class="flex items-center gap-space-xs text-outline font-label-sm text-label-sm">
+<span class="hidden sm:inline-flex items-center gap-1 bg-surface-container px-2 py-0.5 rounded-full text-on-surface-variant">
+<span>Reply</span>
+<kbd class="font-code-sm text-code-sm font-semibold text-primary">R</kbd>
+</span>
+<button aria-label="Print Thread" class="h-8 w-8 rounded-lg flex items-center justify-center text-on-surface-variant hover:bg-surface-container transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">print</span>
+</button>
+<button aria-label="More actions" class="h-8 w-8 rounded-lg flex items-center justify-center text-on-surface-variant hover:bg-surface-container transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</div>
+<!-- Main Email Content Card -->
+<article class="bg-surface-container-lowest p-space-md lg:p-space-lg rounded-xl shadow-sm flex flex-col space-y-space-md">
+<!-- Header & Subject -->
+<header class="flex flex-col sm:flex-row sm:items-start justify-between gap-space-sm">
+<div class="space-y-space-xs min-w-0">
+<div class="flex items-center gap-space-xs flex-wrap">
+<span class="px-2 py-0.5 rounded bg-error-container text-on-error-container font-label-sm text-label-sm font-bold uppercase tracking-wider flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-error animate-pulse"></span>
+                HIGH
+              </span>
+<span class="px-2 py-0.5 rounded bg-surface-container text-on-surface-variant font-code-sm text-code-sm">
+                Inbox #402
+              </span>
+<span class="px-2 py-0.5 rounded bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm">
+                Q4 Planning
+              </span>
+</div>
+<h1 class="font-headline-xl text-headline-xl text-on-surface tracking-tight font-semibold break-words">
+              Project Review Meeting — Final Discussion
+            </h1>
+</div>
+<div class="flex items-center gap-space-xs self-start shrink-0">
+<button class="h-8 w-8 rounded-lg flex items-center justify-center text-outline hover:text-secondary hover:bg-surface-container transition-colors" title="Star message" type="button">
+<span class="material-symbols-outlined text-[20px]">star</span>
+</button>
+<button class="h-8 px-space-sm rounded-lg bg-surface-container text-primary hover:bg-surface-container-high transition-colors font-label-md text-label-md flex items-center gap-1 font-semibold" title="Reply directly" type="button">
+<span class="material-symbols-outlined text-[16px]">reply</span>
+<span>Reply</span>
+</button>
+</div>
+</header>
+<!-- Sender Card Info -->
+<div class="p-space-md rounded-xl bg-surface-container-low flex flex-col md:flex-row md:items-center justify-between gap-space-md">
+<div class="flex items-start gap-space-sm">
+<img class="w-10 h-10 rounded-full object-cover shadow-sm ring-2 ring-surface-container-lowest" data-alt="Close up editorial portrait of John Smith, a professional product manager in his late 30s with friendly demeanor, subtle studio lighting on light indigo background, high resolution photograph" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCuxqy-gUkfifL2oYpr1TxHbovLAqhFSOJpN_rb3_Bi4eNeUjX2fuU4byoM2W_oZof1WK8pW5E0NtH0zxyjkEv7YPCNss074CJjd3_0N7arL_iJLrjGLbCob6g4mK-DERcjAmKc0BL6Ugnc210Wf-7AsNjNCcaPq7SFMYADzQ9dO5-DU5erJlCBIn47m4vjJndvODRlV2qL6Ne6QRM-2N7UMh7FfPsoaV89c1jEer8DCpuWlEVLtCD2hw"/>
+<div class="space-y-0.5 min-w-0">
+<div class="flex items-center gap-space-xs flex-wrap">
+<span class="font-headline-md text-headline-md text-on-surface font-semibold">John Smith</span>
+<span class="font-body-sm text-body-sm text-outline"><john.smith@acme-corp.io></span>
+<span class="font-label-sm text-label-sm px-1.5 py-0.5 rounded bg-surface-container-highest text-on-surface-variant">Lead PM</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant truncate">
+                To: <span class="font-medium text-on-surface">Prakhar</span> <prakhar@company.com>, 
+                <span class="text-outline">CC:</span> Sarah Lee <sarah.lee@designhub.co>
+              </p>
+</div>
+</div>
+<div class="flex flex-col md:items-end shrink-0 text-outline">
+<span class="font-label-md text-label-md text-on-surface font-medium">Friday, October 9, 2026 • 10:42 AM</span>
+<span class="font-label-sm text-label-sm text-primary flex items-center gap-1 mt-0.5">
+<span class="material-symbols-outlined text-[14px]">history</span> 1 hour ago
+            </span>
+</div>
+</div>
+<!-- AI Pill Badges Ribbon -->
+<div class="flex items-center gap-space-xs flex-wrap py-space-xs">
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-primary-fixed text-on-primary-fixed font-label-sm text-label-sm font-semibold">
+<span class="material-symbols-outlined text-[14px]">auto_awesome</span>
+            Summarized
+          </span>
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm font-semibold">
+<span class="material-symbols-outlined text-[14px]">magic_button</span>
+            AI Reply Ready
+          </span>
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-error-container text-on-error-container font-label-sm text-label-sm font-semibold">
+<span class="material-symbols-outlined text-[14px]">bolt</span>
+            Priority: HIGH
+          </span>
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-surface-container-high text-on-secondary-container font-label-sm text-label-sm font-semibold">
+<span class="material-symbols-outlined text-[14px]">calendar_add_on</span>
+            Meeting Detected
+          </span>
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-surface-container-lowest shadow-sm text-on-surface-variant font-label-sm text-label-sm font-medium">
+<span class="material-symbols-outlined text-[14px] text-primary">verified</span>
+            SPF Verified
+          </span>
+</div>
+<!-- Email Body Content -->
+<section class="font-body-lg text-body-lg text-on-surface space-y-space-md py-space-sm leading-relaxed">
+<p>Hi Prakhar,</p>
+<p>Hope your week is going well.</p>
+<p>
+            Can we schedule the final review meeting for this <strong class="font-semibold text-primary">Friday at 3:00 PM</strong>? Sarah has updated the project documentation and we need to run through the deliverables together before presenting to leadership.
+          </p>
+<p>
+            Please review the attached document and confirm your availability by tomorrow noon.
+          </p>
+<p>
+            Best regards,<br/>
+<span class="font-semibold text-on-surface">John Smith</span><br/>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Lead Product Manager • Acme Corp</span>
+</p>
+</section>
+<!-- Attachment Component Card -->
+<div class="mt-space-sm p-space-md rounded-xl bg-surface-container-low flex flex-col sm:flex-row sm:items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-md min-w-0">
+<div class="w-12 h-12 rounded-xl bg-error-container text-error flex items-center justify-center shrink-0 shadow-sm">
+<span class="material-symbols-outlined text-[26px]">picture_as_pdf</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-headline-md text-headline-md text-on-surface font-semibold truncate">Q4_Review_Deliverables_v2.pdf</span>
+<div class="flex items-center gap-2 font-code-sm text-code-sm text-outline">
+<span>2.4 MB</span>
+<span>•</span>
+<span class="text-primary font-semibold">18 pages scanned</span>
+<span>•</span>
+<span class="text-on-surface-variant">No security threats</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-space-xs shrink-0">
+<button class="h-8 px-space-md rounded-lg bg-surface-container-lowest hover:bg-surface-container text-on-surface font-label-md text-label-md flex items-center gap-1.5 transition-colors shadow-sm font-semibold" type="button">
+<span class="material-symbols-outlined text-[16px] text-primary">visibility</span>
+<span>AI Preview</span>
+</button>
+<button class="h-8 px-space-md rounded-lg bg-surface-container-highest hover:bg-surface-container text-on-surface-variant font-label-md text-label-md flex items-center gap-1.5 transition-colors font-medium" type="button">
+<span class="material-symbols-outlined text-[16px]">download</span>
+<span>Download</span>
+</button>
+</div>
+</div>
+</article>
+<!-- Embedded Quick AI Reply Composer -->
+<section class="bg-surface-container-lowest p-space-md lg:p-space-lg rounded-xl shadow-sm space-y-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[20px]">auto_fix_high</span>
+<span class="font-headline-md text-headline-md font-semibold text-on-surface">Quick AI Composer</span>
+</div>
+<span class="font-label-sm text-label-sm text-outline">Press <kbd class="font-code-sm text-code-sm bg-surface-container-low px-1.5 py-0.5 rounded text-on-surface-variant font-semibold">⌘ + Enter</kbd> to dispatch</span>
+</div>
+<!-- Smart Instant Chips -->
+<div class="space-y-space-xs">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Recommended quick-response seeds</span>
+<div class="flex flex-wrap items-center gap-space-xs">
+<button class="chip-action px-3 py-1.5 rounded-full bg-primary-fixed hover:bg-primary-fixed-dim text-on-primary-fixed font-label-md text-label-md flex items-center gap-1.5 transition-all shadow-sm" type="button">
+<span class="material-symbols-outlined text-[16px] text-primary">check_circle</span>
+<span>"Confirm Friday 3PM"</span>
+</button>
+<button class="chip-action px-3 py-1.5 rounded-full bg-surface-container hover:bg-surface-container-high text-on-surface font-label-md text-label-md flex items-center gap-1.5 transition-all" type="button">
+<span class="material-symbols-outlined text-[16px] text-outline">schedule</span>
+<span>"Ask for rescheduling to 4PM"</span>
+</button>
+<button class="chip-action px-3 py-1.5 rounded-full bg-surface-container hover:bg-surface-container-high text-on-surface font-label-md text-label-md flex items-center gap-1.5 transition-all" type="button">
+<span class="material-symbols-outlined text-[16px] text-outline">description</span>
+<span>"Request updated slides first"</span>
+</button>
+</div>
+</div>
+<!-- Composer Box -->
+<div class="rounded-xl bg-surface-container-low p-space-md space-y-space-sm shadow-inner">
+<!-- Tone Selector Tabs -->
+<div class="flex items-center justify-between pb-space-xs border-b border-surface-container-high">
+<div class="flex items-center gap-1 p-0.5 bg-surface-container rounded-lg">
+<button class="tone-btn active px-3 py-1 rounded-md bg-surface-container-lowest text-primary font-label-sm text-label-sm font-semibold shadow-xs" type="button">
+                Professional
+              </button>
+<button class="tone-btn px-3 py-1 rounded-md text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm font-medium" type="button">
+                Concise
+              </button>
+<button class="tone-btn px-3 py-1 rounded-md text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm font-medium" type="button">
+                Enthusiastic
+              </button>
+</div>
+<span class="font-code-sm text-code-sm text-primary flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">redeem</span>
+              Context-matched from 4 prior threads
+            </span>
+</div>
+<!-- Dynamic Reply Text Area -->
+<div class="relative">
+<textarea class="w-full bg-transparent font-body-md text-body-md text-on-surface placeholder:text-outline outline-none resize-none leading-relaxed" id="replyComposer" placeholder="Write custom prompt or refine the draft..." rows="4">Hi John,
+
+Thanks for reaching out. Friday at 3:00 PM works perfectly for me. I've reviewed Sarah's updated deliverables and everything aligns with our milestone roadmap. 
+
+Looking forward to our sync before the executive briefing.
+
+Best,
+Prakhar</textarea>
+</div>
+<!-- Composer Bottom Controls -->
+<div class="flex items-center justify-between pt-space-xs">
+<div class="flex items-center gap-space-xs text-on-surface-variant">
+<button class="w-7 h-7 rounded flex items-center justify-center hover:bg-surface-container transition-colors" title="Bold format" type="button">
+<span class="material-symbols-outlined text-[18px]">format_bold</span>
+</button>
+<button class="w-7 h-7 rounded flex items-center justify-center hover:bg-surface-container transition-colors" title="Italic format" type="button">
+<span class="material-symbols-outlined text-[18px]">format_italic</span>
+</button>
+<button class="w-7 h-7 rounded flex items-center justify-center hover:bg-surface-container transition-colors" title="Insert link" type="button">
+<span class="material-symbols-outlined text-[18px]">link</span>
+</button>
+<button class="w-7 h-7 rounded flex items-center justify-center hover:bg-surface-container transition-colors" title="Attach media or document" type="button">
+<span class="material-symbols-outlined text-[18px]">attach_file</span>
+</button>
+<div class="h-4 w-px bg-surface-container-high mx-1"></div>
+<button class="flex items-center gap-1 px-2 py-1 rounded bg-primary-fixed hover:bg-primary-fixed-dim text-on-primary-fixed font-label-sm text-label-sm font-semibold transition-colors" id="magicRewriteBtn" type="button">
+<span class="material-symbols-outlined text-[14px]">magic_button</span>
+                Rewrite with AI
+              </button>
+</div>
+<!-- Send Action Split Button -->
+<div class="flex items-center rounded-lg bg-primary-container text-on-primary shadow-sm overflow-hidden">
+<button class="h-9 px-space-md hover:bg-primary transition-colors font-label-md text-label-md font-semibold flex items-center gap-1.5" type="button">
+<span>Send Reply</span>
+<span class="material-symbols-outlined text-[16px]">send</span>
+</button>
+<div class="w-px h-6 bg-on-primary/20"></div>
+<button aria-label="Send options" class="h-9 px-2 hover:bg-primary transition-colors flex items-center justify-center" type="button">
+<span class="material-symbols-outlined text-[16px]">expand_more</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+</section>
+<!-- RIGHT: Dedicated Contextual AI Copilot Panel (w-full lg:w-4/12) -->
+<aside class="w-full lg:w-4/12 flex flex-col p-space-md lg:p-space-lg space-y-space-md shrink-0">
+<!-- Panel Header -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-lg bg-primary-container text-on-primary flex items-center justify-center shadow-xs">
+<span class="material-symbols-outlined text-[18px]">neurology</span>
+</div>
+<div>
+<h2 class="font-headline-md text-headline-md font-semibold text-on-surface">Executive AI Digest</h2>
+<p class="font-body-sm text-body-sm text-outline">Real-time contextual synthesis</p>
+</div>
+</div>
+<div class="flex items-center gap-1">
+<button class="h-8 w-8 rounded-lg flex items-center justify-center text-outline hover:text-primary hover:bg-surface-container transition-colors" id="refreshAiBtn" title="Regenerate analysis" type="button">
+<span class="material-symbols-outlined text-[18px]">refresh</span>
+</button>
+<button class="h-8 w-8 rounded-lg flex items-center justify-center text-outline hover:text-primary hover:bg-surface-container transition-colors" title="Copy digest" type="button">
+<span class="material-symbols-outlined text-[18px]">content_copy</span>
+</button>
+</div>
+</div>
+<!-- 1. Key Takeaways Card -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm space-y-space-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline flex items-center gap-1.5 font-bold">
+<span class="material-symbols-outlined text-[16px] text-primary">fact_check</span>
+            Key Takeaways
+          </span>
+<span class="font-code-sm text-code-sm bg-surface-container px-2 py-0.5 rounded text-outline">3 items</span>
+</div>
+<ul class="space-y-space-sm pt-space-xs font-body-md text-body-md text-on-surface">
+<li class="flex items-start gap-space-sm p-space-xs rounded-lg hover:bg-surface-container-low transition-colors">
+<span class="w-2 h-2 rounded-full bg-primary mt-2 shrink-0"></span>
+<span class="leading-snug">Final project review scheduled for <strong class="font-semibold text-on-surface">Friday at 3:00 PM</strong>.</span>
+</li>
+<li class="flex items-start gap-space-sm p-space-xs rounded-lg hover:bg-surface-container-low transition-colors">
+<span class="w-2 h-2 rounded-full bg-secondary mt-2 shrink-0"></span>
+<span class="leading-snug">Updated deliverables & documentation required from <span class="font-medium">Sarah & Prakhar</span>.</span>
+</li>
+<li class="flex items-start gap-space-sm p-space-xs rounded-lg hover:bg-surface-container-low transition-colors">
+<span class="w-2 h-2 rounded-full bg-error mt-2 shrink-0"></span>
+<span class="leading-snug"><strong class="font-semibold text-error">Decision deadline:</strong> confirmation needed before Friday noon.</span>
+</li>
+</ul>
+</div>
+<!-- 2. Detected Action Items -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm space-y-space-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline flex items-center gap-1.5 font-bold">
+<span class="material-symbols-outlined text-[16px] text-secondary">checklist</span>
+            Detected Action Items
+          </span>
+<span class="font-label-sm text-label-sm px-1.5 py-0.5 rounded bg-primary-fixed text-on-primary-fixed font-semibold">1 / 3 done</span>
+</div>
+<div class="space-y-space-xs pt-space-xs">
+<!-- Item 1 -->
+<label class="flex items-start gap-space-sm p-space-sm rounded-lg bg-surface-container-low hover:bg-surface-container transition-colors cursor-pointer select-none">
+<input class="mt-1 h-4 w-4 rounded text-primary focus:ring-primary accent-primary" type="checkbox"/>
+<div class="flex flex-col min-w-0">
+<span class="font-body-md text-body-md text-on-surface font-medium leading-snug">Update documentation & deliverables</span>
+<div class="flex items-center gap-2 mt-0.5 font-label-sm text-label-sm text-outline">
+<span class="flex items-center gap-0.5 text-on-surface-variant font-medium">
+<span class="material-symbols-outlined text-[13px]">person</span> Sarah Lee
+                </span>
+<span>•</span>
+<span class="text-outline">Pre-meeting</span>
+</div>
+</div>
+</label>
+<!-- Item 2 (Checked) -->
+<label class="flex items-start gap-space-sm p-space-sm rounded-lg bg-surface-container-low hover:bg-surface-container transition-colors cursor-pointer select-none">
+<input checked="" class="mt-1 h-4 w-4 rounded text-primary focus:ring-primary accent-primary" type="checkbox"/>
+<div class="flex flex-col min-w-0">
+<span class="font-body-md text-body-md text-outline line-through leading-snug">Confirm meeting time slot</span>
+<div class="flex items-center gap-2 mt-0.5 font-label-sm text-label-sm">
+<span class="text-primary font-semibold">Assigned to You</span>
+<span>•</span>
+<span class="text-error font-medium">High Urgency</span>
+</div>
+</div>
+</label>
+<!-- Item 3 -->
+<label class="flex items-start gap-space-sm p-space-sm rounded-lg bg-surface-container-low hover:bg-surface-container transition-colors cursor-pointer select-none">
+<input class="mt-1 h-4 w-4 rounded text-primary focus:ring-primary accent-primary" type="checkbox"/>
+<div class="flex flex-col min-w-0">
+<span class="font-body-md text-body-md text-on-surface font-medium leading-snug">Share final review draft with stakeholders</span>
+<div class="flex items-center gap-2 mt-0.5 font-label-sm text-label-sm text-outline">
+<span class="flex items-center gap-0.5 text-on-surface-variant font-medium">
+<span class="material-symbols-outlined text-[13px]">group</span> Team ACME
+                </span>
+<span>•</span>
+<span class="text-outline">After review</span>
+</div>
+</div>
+</label>
+</div>
+</div>
+<!-- 3. Meeting Detected Card (Google Calendar Sync) -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm space-y-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-primary text-[18px]">event</span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline font-bold">Detected Event Sync</span>
+</div>
+<span class="font-code-sm text-code-sm px-2 py-0.5 rounded bg-surface-container-high text-on-secondary-container font-semibold">Calendar Sync</span>
+</div>
+<div class="p-space-md rounded-xl bg-surface-container-low space-y-space-sm">
+<div class="flex items-start justify-between">
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface font-semibold">Project Review — Q4 Strategy</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">Acme Deliverables & Leadership Prep</p>
+</div>
+<div class="w-10 h-10 rounded-lg bg-primary-fixed text-on-primary-fixed flex flex-col items-center justify-center shrink-0">
+<span class="font-label-sm text-label-sm font-bold uppercase leading-none">OCT</span>
+<span class="font-headline-md text-headline-md font-bold leading-none mt-0.5">09</span>
+</div>
+</div>
+<div class="space-y-1.5 font-body-sm text-body-sm text-on-surface-variant pt-space-xs">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-outline">schedule</span>
+<span class="font-medium text-on-surface">Friday, Oct 9 • 3:00 PM – 3:30 PM (IST / GMT+5:30)</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-outline">group</span>
+<span>John Smith, Sarah Lee, Prakhar</span>
+</div>
+</div>
+<!-- CTAs -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-space-xs pt-space-xs">
+<button class="h-8 px-space-sm rounded-lg bg-primary-container hover:bg-primary text-on-primary font-label-md text-label-md font-semibold flex items-center justify-center gap-1.5 transition-colors shadow-xs" type="button">
+<span class="material-symbols-outlined text-[16px]">edit_calendar</span>
+<span>Add to Calendar</span>
+</button>
+<button class="h-8 px-space-sm rounded-lg bg-surface-container-lowest hover:bg-surface-container text-on-surface font-label-md text-label-md font-semibold flex items-center justify-center gap-1.5 transition-colors shadow-xs" type="button">
+<span class="material-symbols-outlined text-[16px] text-primary">videocam</span>
+<span>Join Meet</span>
+</button>
+</div>
+</div>
+</div>
+<!-- 4. AI Security & Priority Analysis -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm space-y-space-md">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline flex items-center gap-1.5 font-bold">
+<span class="material-symbols-outlined text-[16px] text-primary">security</span>
+            Security & Priority Triage
+          </span>
+<span class="font-label-sm text-label-sm text-outline">Engine v4.2</span>
+</div>
+<div class="grid grid-cols-1 gap-space-sm">
+<!-- Priority Breakdown -->
+<div class="p-space-sm rounded-lg bg-surface-container-low flex flex-col space-y-1">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm font-semibold text-on-surface">Priority Assessment</span>
+<span class="font-label-sm text-label-sm px-1.5 py-0.5 rounded bg-error-container text-on-error-container font-bold">HIGH URGENT</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-snug">
+              Contains a tight deadline and requires confirmation before leadership brief.
+            </p>
+</div>
+<!-- Phishing & Trust Check -->
+<div class="p-space-sm rounded-lg bg-surface-container-low flex flex-col space-y-1">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm font-semibold text-on-surface">Phishing & Integrity Risk</span>
+<span class="font-label-sm text-label-sm px-1.5 py-0.5 rounded bg-surface-container-high text-on-secondary-container font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">format_image_left</span>
+                SAFE
+              </span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-snug">
+              Sender domain verified. SPF/DKIM passed, 0 anomalous links detected, attachment clean.
+            </p>
+<!-- Small visual telemetry indicator bar -->
+<div class="pt-1.5 flex items-center gap-2">
+<div class="w-full bg-surface-container-highest rounded-full h-1.5 overflow-hidden">
+<div class="bg-primary h-1.5 rounded-full" style="width: 98%"></div>
+</div>
+<span class="font-code-sm text-code-sm text-primary font-bold">98% Trust</span>
+</div>
+</div>
+</div>
+</div>
+</aside>
+</div>
+</div>
+<script>
+  // Interactive Tone Switcher & Quick Composer Micro-Interactions
+  document.addEventListener('DOMContentLoaded', () => {
+    const toneButtons = document.querySelectorAll('.tone-btn');
+    const replyArea = document.getElementById('replyComposer');
+
+    const draftsByTone = {
+      'Professional': "Hi John,\n\nThanks for reaching out. Friday at 3:00 PM works perfectly for me. I've reviewed Sarah's updated deliverables and everything aligns with our milestone roadmap.\n\nLooking forward to our sync before the executive briefing.\n\nBest,\nPrakhar",
+      'Concise': "Hi John,\n\nFriday at 3:00 PM works for me. Deliverables look solid.\n\nBest,\nPrakhar",
+      'Enthusiastic': "Hi John,\n\nSounds great! Friday at 3:00 PM works nicely. Super excited to review Sarah's new documentation—the draft deliverables look fantastic!\n\nSee you then,\nPrakhar"
+    };
+
+    toneButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        toneButtons.forEach(b => {
+          b.classList.remove('bg-surface-container-lowest', 'text-primary', 'font-semibold', 'shadow-xs');
+          b.classList.add('text-on-surface-variant', 'font-medium');
+        });
+        btn.classList.add('bg-surface-container-lowest', 'text-primary', 'font-semibold', 'shadow-xs');
+        btn.classList.remove('text-on-surface-variant', 'font-medium');
+
+        const tone = btn.innerText.trim();
+        if (draftsByTone[tone] && replyArea) {
+          replyArea.value = draftsByTone[tone];
+        }
+      });
+    });
+
+    // Quick chip click handlers
+    const chips = document.querySelectorAll('.chip-action');
+    chips.forEach(chip => {
+      chip.addEventListener('click', () => {
+        const text = chip.innerText.replace(/"/g, '').trim();
+        if (replyArea) {
+          if (text.includes("Confirm Friday")) {
+            replyArea.value = "Hi John,\n\nI confirm Friday at 3:00 PM works for the review meeting. I'll take a look at the attached deliverables before we jump on the call.\n\nBest,\nPrakhar";
+          } else if (text.includes("rescheduling")) {
+            replyArea.value = "Hi John,\n\nFriday at 3:00 PM conflicts with another executive catchup. Could we move this to 4:00 PM instead? Let me know if that works for Sarah as well.\n\nBest,\nPrakhar";
+          } else if (text.includes("Request updated slides")) {
+            replyArea.value = "Hi John,\n\nFriday at 3:00 PM is penciled in. Could you please send over the latest slide deck so I can prepare feedback alongside Sarah's docs?\n\nBest,\nPrakhar";
+          }
+        }
+      });
+    });
+
+    // Rewrite button visual feedback
+    const rewriteBtn = document.getElementById('magicRewriteBtn');
+    if (rewriteBtn) {
+      rewriteBtn.addEventListener('click', () => {
+        rewriteBtn.innerHTML = `<span class="material-symbols-outlined text-[14px] animate-spin">sync</span> Polishing...`;
+        setTimeout(() => {
+          rewriteBtn.innerHTML = `<span class="material-symbols-outlined text-[14px]">done</span> Polished!`;
+          setTimeout(() => {
+            rewriteBtn.innerHTML = `<span class="material-symbols-outlined text-[14px]">magic_button</span> Rewrite with AI`;
+          }, 1500);
+        }, 600);
+      });
+    }
+
+    // Refresh AI button animation
+    const refreshBtn = document.getElementById('refreshAiBtn');
+    if (refreshBtn) {
+      refreshBtn.addEventListener('click', () => {
+        refreshBtn.classList.add('animate-spin');
+        setTimeout(() => {
+          refreshBtn.classList.remove('animate-spin');
+        }, 800);
+      });
+    }
+  });
+</script></main></div></body></html>

@@ -1,0 +1,16 @@
+{
+  "name": "smartmail-ai",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A secure, AI-assisted Gmail workspace.",
+  "workspaces": ["client", "server"],
+  "engines": { "node": ">=22.12.0", "npm": ">=10.9.0" },
+  "scripts": {
+    "dev": "concurrently -k \"npm run dev --workspace @smartmail/server\" \"npm run dev --workspace @smartmail/client\"",
+    "start": "npm run start --workspace server",
+    "worker": "npm run worker --workspace server",
+    "db:indexes": "npm run db:indexes --workspace server",
+    "build": "npm run build --workspace client"
+  },
+  "devDependencies": { "concurrently": "^9.1.2" }
+}
