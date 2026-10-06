@@ -1,49 +1,96 @@
 # SmartMail AI
 
-SmartMail AI is a full-stack Gmail workspace for organizing email, understanding conversations, and drafting clearer messages with AI. It combines a React client with a modular Express API, MongoDB, Gmail OAuth, and background workers.
+<p align="center">
+  <strong>A calmer Gmail workspace with practical AI assistance.</strong><br />
+  Organize conversations, find answers across your inbox, and draft messages while keeping every suggestion under your control.
+</p>
 
-> AI suggestions stay editable. SmartMail never sends a message or creates a calendar event without an explicit user action.
+<p align="center">
+  <a href="https://github.com/prakharpatel16/smartmail-ai"><img alt="GitHub repository" src="https://img.shields.io/badge/GitHub-SmartMail%20AI-4f46e5?logo=github"></a>
+  <a href="LICENSE"><img alt="MIT License" src="https://img.shields.io/badge/License-MIT-22c55e.svg"></a>
+  <img alt="Node.js 22.12+" src="https://img.shields.io/badge/Node.js-22.12%2B-339933?logo=nodedotjs&logoColor=white">
+  <img alt="React 19" src="https://img.shields.io/badge/React-19-149eca?logo=react&logoColor=white">
+</p>
 
-![SmartMail AI dashboard](UI_UX/stitch_smartmail_ai_web_client/dashboard_smartmail_ai/screen.png)
+> [!IMPORTANT]
+> AI output is advisory and editable. SmartMail does not send a message or create a calendar event without an explicit user action.
 
-## Features
+## Explore
 
-- Gmail OAuth connection, inbox sync, threaded messages, search, labels, and drafts
-- Compose, reply, and save drafts through Gmail
-- AI email and thread summaries, reply suggestions, writing, rewriting, and pre-send checks
-- Priority, meeting, and suspicious-message detection
-- Ask My Inbox with retrieval grounded in the signed-in user's email
-- Attachment and inline image previews
-- Email verification codes, secure sessions, user settings, and real-time notifications
-- Background Gmail sync and AI processing through BullMQ and Redis
+- [What it does](#what-it-does)
+- [How it fits together](#how-it-fits-together)
+- [Run it locally](#run-it-locally)
+- [Configure integrations](#configure-integrations)
+- [Deploy](#deploy)
+- [Security](#security)
+- [License](#license)
 
-AI classification is advisory. Review email content and generated suggestions before acting.
+## What it does
 
-## Architecture
+<details>
+<summary><strong>Mailbox and writing</strong></summary>
 
-```text
-client/  React, Vite, React Router, Redux Toolkit, Axios, Socket.IO client
-server/  Express API, Mongoose models, Gmail OAuth/API, AI services, Socket.IO
-MongoDB Durable application data and email index
-Redis    Rate-limit state, queues, scheduled sync, and worker coordination
-Worker   Gmail synchronization, AI analysis, embeddings, and notifications
+- Connect a Google account with Gmail OAuth, then sync, search, and organize messages.
+- Read conversations, inspect attachments and inline images, and manage starred, sent, draft, and trash views.
+- Compose, reply, save drafts, and send messages through Gmail.
+- Use AI to summarize conversations, suggest replies, write or rewrite drafts, and check text before sending.
+
+</details>
+
+<details>
+<summary><strong>Inbox intelligence</strong></summary>
+
+- Ask questions about the signed-in user's email with user-scoped retrieval.
+- Detect message priority, suspicious signals, and meeting details.
+- Review AI analysis before acting; detections can be wrong and are not security guarantees.
+
+</details>
+
+<details>
+<summary><strong>Account and background work</strong></summary>
+
+- Verify new accounts by email code and protect sessions with HTTP-only cookies.
+- Configure user preferences and receive real-time notifications.
+- Run Gmail synchronization and AI processing in background workers backed by Redis and BullMQ.
+
+</details>
+
+## How it fits together
+
+```mermaid
+flowchart LR
+  Browser[React web client] -->|HTTPS API and Socket.IO| API[Express API]
+  API --> DB[(MongoDB)]
+  API --> Gmail[Google Gmail API]
+  API --> AI[Gemini or OpenAI]
+  API --> Queue[(Redis and BullMQ)]
+  Queue --> Worker[Background worker]
+  Worker --> Gmail
+  Worker --> DB
 ```
 
-The server is organized into routes, controllers, services, models, middleware, and workers. Protected email and AI operations are scoped to the authenticated user. Gmail access and provider credentials stay on the server.
+The code is split into a Vite client and an Express server. The server separates routes, controllers, services, models, middleware, and workers. MongoDB stores application data; Redis coordinates queues, scheduled synchronization, and production rate-limit state.
 
-## Requirements
+| Part | Main technologies | Responsibility |
+| --- | --- | --- |
+| Client | React, Vite, Redux Toolkit, React Router | Mail workspace and account settings |
+| API | Express, Mongoose, Socket.IO | Authenticated APIs, Gmail access, and live updates |
+| Worker | BullMQ, Redis | Gmail sync and asynchronous AI analysis |
+| Integrations | Gmail API, Gemini or OpenAI, SMTP | Mailbox access, AI assistance, verification email |
 
-- Node.js 22.12 or newer
-- npm 10.9 or newer
-- MongoDB for application data
-- Redis for production API rate limits and background jobs
-- Google Cloud OAuth web client and the Gmail API for Gmail features
-- SMTP credentials for signup verification messages
-- An API key for Gemini or OpenAI AI features
+## Run it locally
 
-## Run locally
+### Prerequisites
 
-### 1. Install dependencies
+- Node.js **22.12+** and npm **10.9+**
+- MongoDB
+- A Google OAuth web client with the Gmail API enabled
+- SMTP credentials for account verification
+- A Gemini or OpenAI API key for AI features
+- Redis for production-style queues and a separate worker (optional for basic local development)
+
+<details>
+<summary><strong>1. Install dependencies</strong></summary>
 
 From the repository root:
 
@@ -51,90 +98,100 @@ From the repository root:
 npm ci
 ```
 
-### 2. Configure the server
+</details>
 
-Copy `server/.env.example` to `server/.env`, then configure at least:
+<details>
+<summary><strong>2. Configure the API</strong></summary>
 
-```dotenv
-MONGODB_URI=mongodb://127.0.0.1:27017/smartmail
-JWT_SECRET=use-a-random-secret-at-least-32-characters-long
-TOKEN_ENCRYPTION_KEY=base64-encoded-32-byte-key
-CLIENT_URL=http://localhost:5173
-```
+Copy `server/.env.example` to `server/.env` and fill in the values for the integrations you want to use. At minimum, configure MongoDB, a strong JWT secret, and the token encryption key.
 
-Generate secrets with Node.js:
+Generate both secrets with Node.js:
 
 ```bash
 node -e "console.log(require('node:crypto').randomBytes(48).toString('base64url'))"
 node -e "console.log(require('node:crypto').randomBytes(32).toString('base64'))"
 ```
 
-Use the first value for `JWT_SECRET` and the second for `TOKEN_ENCRYPTION_KEY`. Keep the encryption key backed up and unchanged; Gmail OAuth tokens stored in MongoDB depend on it.
+Use the first value as `JWT_SECRET` and the second as `TOKEN_ENCRYPTION_KEY`. Back up the encryption key securely and keep it unchanged: stored Gmail OAuth tokens depend on it.
 
-Configure the remaining values in `server/.env` as needed:
+Common local settings:
 
-- **Signup verification:** `SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE`, `SMTP_USER`, `SMTP_PASSWORD`, and `SMTP_FROM`.
-- **Gmail:** `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, and `GOOGLE_REDIRECT_URI=http://localhost:5000/api/gmail/callback`. Enable the Gmail API and register that exact redirect URI on your Google OAuth web client.
-- **AI:** set `AI_PROVIDER=gemini` with `GEMINI_API_KEY`, or `AI_PROVIDER=openai` with `OPENAI_API_KEY`. Keep these keys on the server.
-- **Background jobs:** set `REDIS_URL` to use Redis-backed queues locally. Without Redis, local development uses the in-process queue where supported.
+```dotenv
+CLIENT_URL=http://localhost:5173
+MONGODB_URI=mongodb://127.0.0.1:27017/smartmail
+GOOGLE_REDIRECT_URI=http://localhost:5000/api/gmail/callback
+```
 
-See [`server/.env.example`](server/.env.example) for all available options. Never commit `.env` files or put server secrets in `VITE_*` variables.
+The full variable list and safe defaults are in [`server/.env.example`](server/.env.example). Never commit `.env` files or expose server credentials through `VITE_*` variables.
 
-### 3. Start the app
+</details>
+
+<details>
+<summary><strong>3. Configure Google, email, and AI</strong></summary>
+
+**Google Gmail OAuth**
+
+1. Create an OAuth **Web application** client in Google Cloud and enable the Gmail API for its project.
+2. Add `http://localhost:5000/api/gmail/callback` to the OAuth client's authorized redirect URIs.
+3. Set `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET` in `server/.env`.
+4. During OAuth testing, add each account under Google Auth Platform's test users. Public access requires Google's verification for the requested scopes.
+
+**Signup verification email**
+
+Set `SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE`, `SMTP_USER`, `SMTP_PASSWORD`, and `SMTP_FROM` in `server/.env`.
+
+**AI features**
+
+Set `AI_PROVIDER=gemini` and `GEMINI_API_KEY`, or set `AI_PROVIDER=openai` and `OPENAI_API_KEY`. Keep provider keys on the server.
+
+</details>
+
+<details>
+<summary><strong>4. Start the app</strong></summary>
+
+Start the client and API together from the repository root:
 
 ```bash
 npm run dev
 ```
 
-Open [http://localhost:5173](http://localhost:5173). Register, enter the email verification code, connect Gmail, and sync the inbox.
+- Web client: [http://localhost:5173](http://localhost:5173)
+- API health: [http://localhost:5000/api/health](http://localhost:5000/api/health)
 
-The API health endpoint is [http://localhost:5000/api/health](http://localhost:5000/api/health). The worker can be started separately with:
+For Redis-backed background processing, set `REDIS_URL` and run the worker in another terminal:
 
 ```bash
 npm run worker
 ```
 
-## Production deployment
+</details>
 
-The included [`vercel.json`](vercel.json) configures the Vite client build. A production setup can deploy the client to Vercel, the API and background worker as separate Render services, MongoDB on Atlas, and Redis as a managed Key Value service.
+## Deploy
 
-1. Configure production secrets and connection strings in the API host's secret store.
-2. Run `npm run db:indexes` once against the production database.
-3. Create the Atlas Vector Search index from [`server/vector-index.json`](server/vector-index.json). Keep `EMBEDDING_DIMENSIONS` aligned with the index definition (default: `768`).
-4. Deploy the API with `npm start` and set its health check to `/api/health`.
-5. Deploy the background worker with `npm run worker`; configure it with the same MongoDB, Redis, Gmail, and AI settings it needs to process queued jobs.
-6. Build the client with `VITE_API_BASE_URL=https://api.example.com/api` and `VITE_SOCKET_URL=https://api.example.com`.
-7. For subdomain deployments, set `CLIENT_URL=https://app.example.com`, `GOOGLE_REDIRECT_URI=https://api.example.com/api/gmail/callback`, `COOKIE_DOMAIN=example.com`, and `TRUST_PROXY=1` on the API.
+The repository includes a `vercel.json` for the Vite client build. A scalable deployment can host the client and API separately, run the worker as its own process, and use managed MongoDB and Redis services.
 
-Serve the client and API from subdomains of the same site, such as `app.example.com` and `api.example.com`, to support secure browser cookies. The production API requires `REDIS_URL` and `TOKEN_ENCRYPTION_KEY`.
+1. Provision MongoDB, Redis, the API service, the client hosting, and a worker process.
+2. Add production secrets to the API and worker secret stores. Do not put server secrets in the client build environment.
+3. Set `CLIENT_URL` to the deployed client origin and `GOOGLE_REDIRECT_URI` to `https://<api-host>/api/gmail/callback`; add the exact URI to the Google OAuth client.
+4. Build and serve the API with `npm start`; set its health check to `/api/health`.
+5. Run background processing with `npm run worker`. Configure it with the MongoDB, Redis, Gmail, and AI settings it needs.
+6. Build the client with `VITE_API_BASE_URL=https://<api-host>/api` and `VITE_SOCKET_URL=https://<api-host>`.
+7. Set `REDIS_URL`, `TOKEN_ENCRYPTION_KEY`, `TRUST_PROXY=1` (when behind a trusted proxy), and cookie settings for your domain. Prefer client and API subdomains under the same parent domain so secure cookies can be configured appropriately.
+8. Run database index setup once: `npm run db:indexes`. Configure the MongoDB Atlas Vector Search index using `server/vector-index.json`; keep its dimensions aligned with `EMBEDDING_DIMENSIONS`.
 
-Google OAuth testing mode only permits configured test users. Public Gmail access requires Google OAuth app verification for the scopes this app requests; review Google Workspace's current verification requirements before launch.
-
-See the [deployment notes](deployment.md.md) for additional configuration details.
-
-## Project documentation
-
-- [Product requirements](PRD.md)
-- [Architecture](Architecture.md.md)
-- [API reference](API.md.md)
-- [Database design](database.md.md)
-- [Feature details](features.md.md)
-- [Security notes](Security.md.md)
-- [AI instructions](AI_Instructions.md.md)
-- [Deployment notes](deployment.md.md)
-- [Design files and screens](UI_UX/stitch_smartmail_ai_web_client/)
+Production requires HTTPS, managed secrets, `REDIS_URL`, and a persistent `TOKEN_ENCRYPTION_KEY`. Verify OAuth consent-screen requirements and production redirect URLs before allowing external users to connect Gmail.
 
 ## Security
 
-- Passwords are hashed; sessions use HTTP-only cookies.
-- Signup verification codes are stored as keyed hashes, expire, and have attempt and resend limits.
+- Passwords are hashed, and browser sessions use HTTP-only cookies.
+- Verification codes are stored as keyed hashes and expire with attempt and resend limits.
 - Gmail OAuth tokens are encrypted at rest with AES-256-GCM.
-- Incoming email HTML is sanitized before display.
-- AI uses bounded, user-scoped email context; email content is treated as untrusted input.
-- AI results are suggestions and risk signals, not guarantees.
+- Incoming email HTML is sanitized before display; treat email content and attachments as untrusted.
+- AI context is bounded and scoped to the signed-in user. Generated text and risk signals require human review.
+- Keep `.env` files and credentials out of Git, client bundles, logs, and support screenshots.
 
-Report security concerns privately to the repository owner rather than posting credentials or personal email content in an issue.
+For security concerns, contact the repository owner privately; do not post credentials or private email content in a public issue.
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE).
+SmartMail AI is available under the [MIT License](LICENSE).
