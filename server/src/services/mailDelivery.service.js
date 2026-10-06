@@ -35,7 +35,41 @@ async function sendWithResend({ email, message }) {
     body: JSON.stringify({ from: env.RESEND_FROM, to: [email], ...message }),
     signal: AbortSignal.timeout(12_000)
   });
-  if (!response.ok) throw new Error(`Resend request failed with status ${response.status}`);
+  if (!response.ok) {
+    const providerResponse = await response.json().catch(() => null);
+    const failure = new Error('The email provider rejected the request.');
+    failure.providerStatus = response.status;
+    const providerCode = providerResponse?.name || providerResponse?.code;
+    if (typeof providerCode === 'string' && /^[a-z\d_.-]{1,60}$/i.test(providerCode)) failure.providerCode = providerCode;
+    throw failure;
+  }
+}
+
+function deliveryError(error) {
+  if (error instanceof AppError) return error;
+
+  const status = error?.providerStatus;
+  const errorCode = typeof error?.code === 'string' && /^[A-Z\d_.-]{1,60}$/.test(error.code) ? error.code : undefined;
+  const diagnostics = {
+    provider: env.EMAIL_PROVIDER,
+    ...(Number.isInteger(status) ? { status } : {}),
+    ...(error?.providerCode ? { providerCode: error.providerCode } : {}),
+    ...(errorCode ? { transportCode: errorCode } : {}),
+    ...(['TimeoutError', 'AbortError'].includes(error?.name) ? { failure: 'timeout' } : {})
+  };
+
+  let result;
+  if (status === 401) {
+    result = new AppError(503, 'EMAIL_PROVIDER_AUTH_FAILED', 'Resend rejected its API key. Check RESEND_API_KEY in the Render service environment.');
+  } else if ([400, 403, 422].includes(status)) {
+    result = new AppError(503, 'EMAIL_SENDER_REJECTED', 'Resend rejected the sender. Verify your domain and make RESEND_FROM use an address on that verified domain.');
+  } else if (status === 429) {
+    result = new AppError(503, 'EMAIL_PROVIDER_RATE_LIMITED', 'The email provider is temporarily rate limiting requests. Wait briefly and try again.');
+  } else {
+    result = new AppError(503, 'EMAIL_DELIVERY_FAILED', 'We could not send the verification email right now. Check the email provider configuration and try again.');
+  }
+  result.emailDeliveryDiagnostics = diagnostics;
+  return result;
 }
 
 export async function sendVerificationCode({ email, fullName, code, expiresInMinutes }) {
@@ -51,7 +85,6 @@ export async function sendVerificationCode({ email, fullName, code, expiresInMin
     }
     await mailTransport.sendMail({ from: env.SMTP_FROM || env.SMTP_USER, to: email, ...message });
   } catch (error) {
-    if (error instanceof AppError) throw error;
-    throw new AppError(503, 'EMAIL_DELIVERY_FAILED', 'We could not send the verification email right now. Check the email provider configuration and try again.');
+    throw deliveryError(error);
   }
 }

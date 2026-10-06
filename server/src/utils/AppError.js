@@ -16,7 +16,13 @@ export function errorHandler(error, req, res, _next) {
   const isDuplicate = error.code === 11000;
   const status = Number.isInteger(error.statusCode) ? error.statusCode : isSchemaError ? 400 : isDuplicate ? 409 : error.name === 'CastError' ? 400 : 500;
   const code = error.isOperational && typeof error.code === 'string' ? error.code : (isSchemaError ? 'VALIDATION_ERROR' : isDuplicate ? 'RESOURCE_CONFLICT' : error.name === 'CastError' ? 'VALIDATION_ERROR' : 'INTERNAL_SERVER_ERROR');
-  if (status >= 500) console.error(JSON.stringify({ level: 'error', code, path: req.path, method: req.method, requestId: req.id }));
+  if (status >= 500) {
+    const emailDelivery = error.emailDeliveryDiagnostics;
+    console.error(JSON.stringify({
+      level: 'error', code, path: req.path, method: req.method, requestId: req.id,
+      ...(emailDelivery ? { emailDelivery } : {})
+    }));
+  }
   const message = status >= 500 && !error.isOperational ? 'Something went wrong. Please try again.' : error.message;
   const details = error.details || (error.name === 'ZodError' ? error.issues.map(({ path, message: issueMessage }) => ({ field: path.join('.'), message: issueMessage })) : undefined);
   if (code === 'AI_RATE_LIMITED' && Number.isInteger(details?.retryAfterSeconds)) res.setHeader('Retry-After', String(details.retryAfterSeconds));
