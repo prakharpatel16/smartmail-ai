@@ -1,6 +1,6 @@
 import { env } from '../config/env.js';
 import { GmailAccount } from '../models/index.js';
-import { enqueueEmailSync, queuesEnabled } from '../queues/index.js';
+import { enqueueEmailSync, workersEnabled } from '../queues/index.js';
 import { syncMailbox } from './gmail.service.js';
 
 const leaseDurationMs = Math.max(env.GMAIL_AUTO_SYNC_INTERVAL_MS * 5, 5 * 60 * 1000);
@@ -14,7 +14,7 @@ export async function releaseMailboxAutoSyncLease(accountId, leaseUntil) {
   );
 }
 
-export async function pollConnectedMailboxes({ enqueue = queuesEnabled } = {}) {
+export async function pollConnectedMailboxes({ enqueue = workersEnabled } = {}) {
   const now = new Date();
   const candidates = await GmailAccount.find({
     isConnected: true,
@@ -66,7 +66,7 @@ export async function pollConnectedMailboxes({ enqueue = queuesEnabled } = {}) {
 }
 
 export function startLocalMailboxAutoSync() {
-  if (queuesEnabled) return () => {};
+  if (workersEnabled) return () => {};
 
   const poll = async () => {
     if (localPollRunning) return;

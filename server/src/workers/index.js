@@ -1,5 +1,5 @@
 import { UnrecoverableError, Worker } from 'bullmq';
-import { closeQueues, emailSyncQueue, redisConnection } from '../queues/index.js';
+import { closeQueues, emailSyncQueue, redisConnection, workersEnabled } from '../queues/index.js';
 import { env } from '../config/env.js';
 import { connectDatabase } from '../config/database.js';
 import { syncMailbox } from '../services/gmail.service.js';
@@ -8,7 +8,7 @@ import { processEmailAi } from '../services/ai/processing.service.js';
 import { createNotification } from '../services/notification.service.js';
 import { initializeSocketEmitter } from '../services/socketEvents.service.js';
 
-if (!redisConnection) throw new Error('REDIS_URL is required to start the SmartMail worker.');
+if (!redisConnection || !workersEnabled) throw new Error('Set BACKGROUND_JOBS_MODE=queue and configure REDIS_URL to start the SmartMail worker.');
 await connectDatabase();
 initializeSocketEmitter();
 await emailSyncQueue.upsertJobScheduler(

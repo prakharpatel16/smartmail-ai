@@ -34,6 +34,7 @@ const schema = z.object({
   EMBEDDING_MODEL: z.string().default(''),
   EMBEDDING_DIMENSIONS: z.coerce.number().int().min(128).max(3072).default(768),
   VECTOR_INDEX_NAME: z.string().default('smartmail_email_vector'),
+  BACKGROUND_JOBS_MODE: z.enum(['inline', 'queue']).default('inline'),
   REDIS_URL: z.string().optional().default(''),
   COOKIE_DOMAIN: z.string().optional().default(''),
   TRUST_PROXY: z.coerce.number().int().min(0).max(5).default(0)

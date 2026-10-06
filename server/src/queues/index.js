@@ -3,14 +3,15 @@ import IORedis from 'ioredis';
 import { env } from '../config/env.js';
 
 export const queuesEnabled = Boolean(env.REDIS_URL);
+export const workersEnabled = queuesEnabled && env.BACKGROUND_JOBS_MODE === 'queue';
 export const redisConnection = queuesEnabled ? new IORedis(env.REDIS_URL, { maxRetriesPerRequest: null, enableReadyCheck: true }) : null;
-export const emailSyncQueue = queuesEnabled ? new Queue('email-sync', { connection: redisConnection, defaultJobOptions: {
+export const emailSyncQueue = workersEnabled ? new Queue('email-sync', { connection: redisConnection, defaultJobOptions: {
   attempts: 4, backoff: { type: 'exponential', delay: 2_000 }, removeOnComplete: { age: 86_400, count: 2000 }, removeOnFail: { age: 604_800, count: 5000 }
 } }) : null;
-export const aiProcessingQueue = queuesEnabled ? new Queue('ai-processing', { connection: redisConnection, defaultJobOptions: {
+export const aiProcessingQueue = workersEnabled ? new Queue('ai-processing', { connection: redisConnection, defaultJobOptions: {
   attempts: 3, backoff: { type: 'exponential', delay: 3_000 }, removeOnComplete: { age: 86_400, count: 5000 }, removeOnFail: { age: 604_800, count: 5000 }
 } }) : null;
-export const notificationsQueue = queuesEnabled ? new Queue('notifications', { connection: redisConnection, defaultJobOptions: {
+export const notificationsQueue = workersEnabled ? new Queue('notifications', { connection: redisConnection, defaultJobOptions: {
   attempts: 5, backoff: { type: 'exponential', delay: 1_000 }, removeOnComplete: { age: 86_400, count: 3000 }, removeOnFail: { age: 604_800, count: 5000 }
 } }) : null;
 

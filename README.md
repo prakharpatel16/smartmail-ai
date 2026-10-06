@@ -158,7 +158,7 @@ npm run dev
 - Web client: [http://localhost:5173](http://localhost:5173)
 - API health: [http://localhost:5000/api/health](http://localhost:5000/api/health)
 
-For Redis-backed background processing, set `REDIS_URL` and run the worker in another terminal:
+By default, sync and AI tasks run inline in the API process, so a separate worker is not needed. For Redis-backed background processing, set `BACKGROUND_JOBS_MODE=queue`, configure `REDIS_URL`, and run the worker in another terminal:
 
 ```bash
 npm run worker
@@ -170,11 +170,11 @@ npm run worker
 
 The repository includes a `vercel.json` for the Vite client build. A scalable deployment can host the client and API separately, run the worker as its own process, and use managed MongoDB and Redis services.
 
-1. Provision MongoDB, Redis, the API service, the client hosting, and a worker process.
+1. Provision MongoDB, Redis, the API service, and the client hosting. Add a worker process if using `BACKGROUND_JOBS_MODE=queue`.
 2. Add production secrets to the API and worker secret stores. Do not put server secrets in the client build environment.
 3. Set `CLIENT_URL` to the deployed client origin and `GOOGLE_REDIRECT_URI` to `https://<api-host>/api/gmail/callback`; add the exact URI to the Google OAuth client.
 4. Build and serve the API with `npm start`; set its health check to `/api/health`.
-5. Run background processing with `npm run worker`. Configure it with the MongoDB, Redis, Gmail, and AI settings it needs.
+5. For `BACKGROUND_JOBS_MODE=queue`, run background processing with `npm run worker` and configure it with the same MongoDB, Redis, Gmail, and AI settings as the API. Leave the mode at `inline` when no worker process is deployed.
 6. Build the client with `VITE_API_BASE_URL=https://<api-host>/api` and `VITE_SOCKET_URL=https://<api-host>`.
 7. Set `REDIS_URL`, `TOKEN_ENCRYPTION_KEY`, `TRUST_PROXY=1` (when behind a trusted proxy), and cookie settings for your domain. Prefer client and API subdomains under the same parent domain so secure cookies can be configured appropriately.
 8. Run database index setup once: `npm run db:indexes`. Configure the MongoDB Atlas Vector Search index using `server/vector-index.json`; keep its dimensions aligned with `EMBEDDING_DIMENSIONS`.

@@ -7,7 +7,7 @@ import { closeQueues } from './queues/index.js';
 import { createSocketServer } from './socket.js';
 import { startLocalMailboxAutoSync } from './services/mailboxAutoSync.service.js';
 
-if (isProduction && !env.REDIS_URL) throw new Error('REDIS_URL is required in production for shared rate limits and background workers.');
+if (isProduction && !env.REDIS_URL) throw new Error('REDIS_URL is required in production for shared rate limits.');
 if (isProduction && !env.TOKEN_ENCRYPTION_KEY) throw new Error('TOKEN_ENCRYPTION_KEY is required in production.');
 
 await connectDatabase();
