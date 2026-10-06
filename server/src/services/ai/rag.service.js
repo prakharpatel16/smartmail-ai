@@ -6,7 +6,7 @@ import { AppError } from '../../utils/AppError.js';
 import { generateEmbedding, generateValidatedJson } from './ai.service.js';
 
 const answerSchema = z.object({ answer: z.string().min(1).max(8000) });
-const stopWords = new Set(['what','when','where','which','who','whom','have','has','from','with','about','this','that','your','you','the','and','for','are','was','were','will','would','could','should','into','recent','email','emails','inbox','please','show','tell','summarize']);
+const stopWords = new Set(['what','when','where','which','who','whom','have','has','from','with','about','this','that','your','you','the','and','for','are','was','were','will','would','could','should','into','recent','email','emails','inbox','please','show','tell','summarize','give','all','me','any','find','search','look','list']);
 const termsFor = (question) => [...new Set(String(question).toLowerCase().match(/[a-z0-9@._-]{3,}/g) || [])].filter((word) => !stopWords.has(word)).slice(0, 12);
 const escapeRegex = (value) => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
@@ -38,7 +38,11 @@ async function retrieve(userId, question, limit = 8) {
       } },
       { $project: { subject: 1, sender: 1, receivedAt: 1, bodyText: 1, snippet: 1, score: { $meta: 'vectorSearchScore' } } }
     ]);
-    return results;
+    // A valid vector query can still return no documents when existing mail has
+    // not been embedded yet or the Atlas index is newly created. In that case,
+    // fall back to user-scoped keyword retrieval instead of returning an empty
+    // source list to the assistant.
+    return results.length ? results : textRetrieve(userId, question, limit);
   } catch (error) {
     // The scoped lexical retrieval keeps the feature usable on local MongoDB and before Atlas index provisioning.
     console.warn(JSON.stringify({ level: 'info', code: 'VECTOR_SEARCH_FALLBACK', userId: String(userId), reason: error.codeName || error.code || 'INDEX_UNAVAILABLE' }));
