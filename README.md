@@ -138,7 +138,7 @@ The full variable list and safe defaults are in [`server/.env.example`](server/.
 
 **Signup verification email**
 
-Set `SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE`, `SMTP_USER`, `SMTP_PASSWORD`, and `SMTP_FROM` in `server/.env`.
+Set `EMAIL_PROVIDER=resend`, `RESEND_API_KEY`, and `RESEND_FROM` on hosts that block outbound SMTP (including Render's free web services). Create a Resend API key and verify the sender domain used by `RESEND_FROM` first. For hosts that allow SMTP, set `EMAIL_PROVIDER=smtp` with `SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE`, `SMTP_USER`, `SMTP_PASSWORD`, and `SMTP_FROM` instead. Keep all mail credentials on the server; never add them to Vercel client variables.
 
 **AI features**
 

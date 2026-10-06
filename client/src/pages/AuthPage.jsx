@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { ArrowRight, Check, Eye, EyeOff, Mail, ShieldCheck, Sparkles } from 'lucide-react';
@@ -15,9 +15,16 @@ export function AuthPage({ mode }) {
   const [verificationPending, setVerificationPending] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [busy, setBusy] = useState(false);
+  const [busySeconds, setBusySeconds] = useState(0);
   const [resending, setResending] = useState(false);
   const [error, setError] = useState('');
   const [notice, setNotice] = useState('');
+
+  useEffect(() => {
+    if (!busy) return undefined;
+    const timer = window.setInterval(() => setBusySeconds((seconds) => seconds + 1), 1000);
+    return () => window.clearInterval(timer);
+  }, [busy]);
 
   const set = (key) => (event) => setForm((value) => ({ ...value, [key]: event.target.value }));
   const clearMessages = () => { setError(''); setNotice(''); };
@@ -25,6 +32,7 @@ export function AuthPage({ mode }) {
   const submit = async (event) => {
     event.preventDefault();
     clearMessages();
+    setBusySeconds(0);
     setBusy(true);
     try {
       if (register && verificationPending) {
@@ -133,8 +141,9 @@ export function AuthPage({ mode }) {
           </>}
 
           <button className="btn primary auth-submit" disabled={busy}>
-            {busy ? <span className="spinner" /> : <>{verificationPending ? 'Verify email' : register ? 'Create account' : 'Sign in'} <ArrowRight size={16} /></>}
+            {busy ? <><span className="spinner" /> {register && !verificationPending ? 'Sending code…' : 'Please wait…'}</> : <>{verificationPending ? 'Verify email' : register ? 'Create account' : 'Sign in'} <ArrowRight size={16} /></>}
           </button>
+          {busy && register && !verificationPending && busySeconds >= 5 && <small className="field-hint" role="status">The API may be waking after inactivity. On Render Free, this can take about a minute.</small>}
         </form>
 
         {verificationPending ? <div className="auth-verification-actions">
