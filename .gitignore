@@ -9,3 +9,8 @@ uploads/
 .DS_Store
 Thumbs.db
 npm-debug.log*
+
+# Keep maintainer-only files out of the GitHub repository
+/PROJECT_DOCUMENTATION.md
+/package.json
+/package-lock.json

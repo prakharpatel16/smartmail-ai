@@ -1,4 +1,4 @@
-# SmartMail AI
+<h1 align="center">SmartMail AI</h1>
 
 <p align="center">
   <strong>A calmer Gmail workspace with practical AI assistance.</strong><br />
@@ -92,10 +92,11 @@ The code is split into a Vite client and an Express server. The server separates
 <details>
 <summary><strong>1. Install dependencies</strong></summary>
 
-From the repository root:
+Install each application from its own directory:
 
 ```bash
-npm ci
+cd client && npm install
+cd ../server && npm install
 ```
 
 </details>
@@ -149,9 +150,15 @@ Set `AI_PROVIDER=gemini` and `GEMINI_API_KEY`, or set `AI_PROVIDER=openai` and `
 <details>
 <summary><strong>4. Start the app</strong></summary>
 
-Start the client and API together from the repository root:
+Start the API and client in separate terminals:
 
 ```bash
+cd server
+npm run dev
+```
+
+```bash
+cd client
 npm run dev
 ```
 
@@ -161,6 +168,7 @@ npm run dev
 By default, sync and AI tasks run inline in the API process, so a separate worker is not needed. For Redis-backed background processing, set `BACKGROUND_JOBS_MODE=queue`, configure `REDIS_URL`, and run the worker in another terminal:
 
 ```bash
+cd server
 npm run worker
 ```
 
@@ -174,10 +182,10 @@ The repository includes a `vercel.json` for the Vite client build. A scalable de
 2. Add production secrets to the API and worker secret stores. Do not put server secrets in the client build environment.
 3. Set `CLIENT_URL` to the deployed client origin and `GOOGLE_REDIRECT_URI` to `https://<api-host>/api/gmail/callback`; add the exact URI to the Google OAuth client.
 4. Build and serve the API with `npm start`; set its health check to `/api/health`.
-5. For `BACKGROUND_JOBS_MODE=queue`, run background processing with `npm run worker` and configure it with the same MongoDB, Redis, Gmail, and AI settings as the API. Leave the mode at `inline` when no worker process is deployed.
+5. For `BACKGROUND_JOBS_MODE=queue`, run background processing from the server directory with `npm run worker` and configure it with the same MongoDB, Redis, Gmail, and AI settings as the API. Leave the mode at `inline` when no worker process is deployed.
 6. Build the client with `VITE_API_BASE_URL=https://<api-host>/api` and `VITE_SOCKET_URL=https://<api-host>`.
 7. Set `REDIS_URL`, `TOKEN_ENCRYPTION_KEY`, `TRUST_PROXY=1` (when behind a trusted proxy), and cookie settings for your domain. Prefer client and API subdomains under the same parent domain so secure cookies can be configured appropriately.
-8. Run database index setup once: `npm run db:indexes`. Configure the MongoDB Atlas Vector Search index using `server/vector-index.json`; keep its dimensions aligned with `EMBEDDING_DIMENSIONS`.
+8. Run database index setup once from the server directory with `npm run db:indexes`. Configure the MongoDB Atlas Vector Search index using `server/vector-index.json`; keep its dimensions aligned with `EMBEDDING_DIMENSIONS`.
 
 Production requires HTTPS, managed secrets, `REDIS_URL`, and a persistent `TOKEN_ENCRYPTION_KEY`. Verify OAuth consent-screen requirements and production redirect URLs before allowing external users to connect Gmail.
 
